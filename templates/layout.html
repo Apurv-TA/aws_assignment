@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>File Operation in S3</title>
+</head>
+
+<body>
+    <div class="content">
+        <h2 align='center'>List of buckets in S3</h3>
+            <hr width="80%">
+            <div>
+                <h3>Buckets present are:</h3>
+                <ol>
+                    {% for item in contents %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+            <hr width="40%">
+            <div>
+                <p align="center">
+                    <a href="/" , align="center">Index</a><br>
+                    <a href="/files" , align="center">Created Files</a>
+                </p>
+            </div>
+    </div>
+</body>
+
+</html>
