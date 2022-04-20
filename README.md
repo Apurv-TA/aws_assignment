@@ -19,9 +19,9 @@ sgr-0f8abd0b9856028c2	5000	TCP	0.0.0.0/0
 
 Tags used while creation of the ec2 instance are:<br>
 ```
-owner -> apurv.master@tigeranalytics.com
-Name -> apurv_assignment
-project -> aws-training
+owner     apurv.master@tigeranalytics.com
+Name      apurv_assignment
+project   aws-training
 ```
 
 ### Setting up the CLI
@@ -35,7 +35,7 @@ project -> aws-training
 ### Downloading the application and setting up the environment
 <ol>
   <li>git clone -b enh/issue#1/s3_ec2 https://github.com/Apurv-TA/aws_assignment.git</li>
-  <li>cd repo_name</li>
+  <li>cd aws_assignment</li>
   <li>python3 -m venv venv</li>
   <li>source venv/bin/activate</li>
   <li>pip install Flask</li>
@@ -45,7 +45,7 @@ project -> aws-training
 </ol>
 
 ### Setting up gunicorn
-Opening up and creating service file -> sudo nano /etc/systemd/system/aws_assignment.service</li>
+Opening up and creating service file -> sudo nano /etc/systemd/system/aws_assignment.service
 
 ```
 [Unit]
@@ -56,7 +56,7 @@ After=network.target
 User=ubuntu
 Group=www-data
 WorkingDirectory=/home/ubuntu/aws_assignment
-ExecStart=/home/ubuntu/aws_assignment/venv/bin/gunicorn -b localhost:8085 app:app
+ExecStart=/home/ubuntu/aws_assignment/venv/bin/gunicorn -b localhost:8000 app:app
 Restart=always
 
 [Install]
