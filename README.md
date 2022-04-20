@@ -25,24 +25,24 @@ project   aws-training
 ```
 
 ### Setting up the CLI
-<ol>
-  <li>sudo apt-get update</li>
-  <li>sudo apt-get install python3-venv</li>
-  <li>sudo apt-get install git</li>
-  <li>sudo apt-get install nginx</li>
-</ol>
+```
+sudo apt-get update
+sudo apt-get install python3-venv
+sudo apt-get install git
+sudo apt-get install nginx
+```
 
 ### Downloading the application and setting up the environment
-<ol>
-  <li>git clone -b enh/issue#1/s3_ec2 https://github.com/Apurv-TA/aws_assignment.git</li>
-  <li>cd aws_assignment</li>
-  <li>python3 -m venv venv</li>
-  <li>source venv/bin/activate</li>
-  <li>pip install Flask</li>
-  <li>pip install boto3</li>
-  <li>pip install awscli</li>
-  <li>pip install gunicorn</li>
-</ol>
+```
+git clone -b enh/issue#1/s3_ec2 https://github.com/Apurv-TA/aws_assignment.git
+cd aws_assignment
+python3 -m venv venv
+source venv/bin/activate
+pip install Flask
+pip install boto3
+pip install awscli
+pip install gunicorn
+```
 
 ### Setting up gunicorn
 Opening up and creating service file -> sudo nano /etc/systemd/system/aws_assignment.service
@@ -62,11 +62,12 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
-<ol>
-  <li>sudo systemctl daemon-reload</li>
-  <li>sudo systemctl start aws_assignment.service</li>
-  <li>sudo systemctl enable aws_assignment.service</li>
-</ol>
+
+```
+sudo systemctl daemon-reload</li>
+sudo systemctl start aws_assignment.service</li>
+sudo systemctl enable aws_assignment.service</li>
+```
 
 ### Setting up nginx
 Opening up and creating service file -> sudo nano /etc/nginx/sites-available/default
