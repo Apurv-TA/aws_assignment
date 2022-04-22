@@ -1,5 +1,10 @@
 # aws_assignment
-
+Tags used in this assignment are:
+```
+owner:    apurv.master@tigeranalytics.com
+Name:     apurv_assignment
+project:  aws-training
+```
 ## Creating the flask app
 
 In this part of the assignment we designed a web application using flask which can be used to display the list of files in given folder inside s3 bucket.
@@ -8,12 +13,6 @@ The result of folder creation on s3 bucket is shown in the below picture:
 ![aws_bucket](https://user-images.githubusercontent.com/93191532/163518830-ef7f2fe6-63cd-445b-bc08-86b4661d6b59.png)
 
 After that we created an ec2 instance:
-Tags used while creation of the ec2 instance are:
-```
-owner     apurv.master@tigeranalytics.com
-Name      apurv_assignment
-project   aws-training
-```
 
 The security group inbound rules used while creating the instance are:
 ```
