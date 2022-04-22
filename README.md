@@ -96,18 +96,11 @@ sudo systemctl restart nginx
 ```
 
 
-## MAIN PAGE
-Link to the flask application: 3.91.59.155:8085
-The output is shown below:
-![Screenshot (89)](https://user-images.githubusercontent.com/93191532/164618182-667519b4-b0a3-44d3-ad94-5a8b6b6d3c8a.png)
+## The output
+### LOCAL EXECUTION
+![Screenshot (100)](https://user-images.githubusercontent.com/93191532/164775079-32d5de6c-f3a2-4482-adfb-e3fa01760d35.png)
 
-## CREATED FILES
-![Screenshot (90)](https://user-images.githubusercontent.com/93191532/164618191-b84e0f7b-0c35-4ba4-83ce-5c22e8787294.png)
-
-## BUCKETS
-![Screenshot (91)](https://user-images.githubusercontent.com/93191532/164618199-2a20bcc3-025f-4173-ad10-79b8779535c2.png)
-
-## To access the flask application these steps need to be followed:
+### To access the flask application these steps need to be followed:
 - log in to the aws console<br>
   ![Screenshot (92)](https://user-images.githubusercontent.com/93191532/164647861-83fbf7af-83c1-438c-85de-d89d8359faa8.png)
 - select the required role after logging in
