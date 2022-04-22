@@ -2,88 +2,16 @@
 
 ## First part
 
-In this part of the assignment we designed a web application using flask which can be used to display the list of files in given folder inside s3 bucket.
-
-The result of folder creation on s3 bucket is shown in the below picture:
-![aws_bucket](https://user-images.githubusercontent.com/93191532/163518830-ef7f2fe6-63cd-445b-bc08-86b4661d6b59.png)
-
-After that we created an ec2 instance:<br>
-The security group inbound rules used while creating the instance are:
-```
-sgr-04dfe70845e75d0f5	8084	TCP	0.0.0.0/0
-sgr-0d152190e1e6560d9	8085	TCP	0.0.0.0/0
-sgr-0f19b40aed03c2a9e	8085	TCP	::/0
-sgr-0428044e22f823c02	22	TCP	0.0.0.0/0
-sgr-0f8abd0b9856028c2	5000	TCP	0.0.0.0/0
-```
-
-Tags used while creation of the ec2 instance are:<br>
-```
-owner     apurv.master@tigeranalytics.com
-Name      apurv_assignment
-project   aws-training
-```
-
-### Setting up the CLI
-```
-sudo apt-get update
-sudo apt-get install python3-venv
-sudo apt-get install git
-sudo apt-get install nginx
-```
-
-### Downloading the application and setting up the environment
-```
-git clone -b enh/issue#1/s3_ec2 https://github.com/Apurv-TA/aws_assignment.git
-cd aws_assignment
-python3 -m venv venv
-source venv/bin/activate
-pip install Flask
-pip install boto3
-pip install awscli
-pip install gunicorn
-```
-
-### Setting up gunicorn
-Opening up and creating service file -> sudo nano /etc/systemd/system/aws_assignment.service
-
-```
-[Unit]
-Description=Gunicorn instance for a simple Flask app
-After=network.target
-
-[Service]
-User=ubuntu
-Group=www-data
-WorkingDirectory=/home/ubuntu/aws_assignment
-ExecStart=/home/ubuntu/aws_assignment/venv/bin/gunicorn -b localhost:8000 app:app
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-```
-sudo systemctl daemon-reload</li>
-sudo systemctl start aws_assignment.service</li>
-sudo systemctl enable aws_assignment.service</li>
-```
-
-### Setting up nginx
-Opening up and creating service file -> sudo nano /etc/nginx/sites-available/default
-
-```
-upstream flaskaws {
-  server 127.0.0.1:8000;
-}
-server {
-  listen 8085;
-  root /aws_assignment/templates;
-  
-  location / {
-    proxy_pass http://flaskaws;
-   }
- }
-```
-Finally, we complete the hosting by running the command:
-> sudo systemctl restart nginx
+To access the flask application these steps need to be followed:
+- open aws in the browser and log in to aws console
+![Screenshot (92)](https://user-images.githubusercontent.com/93191532/164645021-a137025b-235d-4612-99f8-a994df211e30.png)
+- select the required role after logging in
+- go to ec2 dashboard and select instances
+![Screenshot (93)](https://user-images.githubusercontent.com/93191532/164645112-4989ca2b-48e7-4981-9dbf-d6cbf8cc8740.png)
+- select apurv_assignment from the list of running instances
+- copy the public ipv4 address
+![Screenshot (94)](https://user-images.githubusercontent.com/93191532/164645301-f59604ee-3fb3-47d1-8e2c-64ef9d76253b.png)
+- create a new tab and enter ip:8085 in the search pane where ip is the public ipv4 address
+![Screenshot (95)](https://user-images.githubusercontent.com/93191532/164645717-1d5e8a89-3dd7-4d90-8861-8b2cb1b3f25a.png)
+- you can then view the flask application
+![Screenshot (96)](https://user-images.githubusercontent.com/93191532/164645789-50ebcb8c-47b9-4651-9edf-6b5c2c6dfc7a.png)
