@@ -2,7 +2,6 @@
 Tags used in this assignment are:
 ```
 owner:    apurv.master@tigeranalytics.com
-Name:     apurv_assignment
 project:  aws-training
 ```
 ## Creating the flask app
