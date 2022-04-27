@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RDS Created</title>
+</head>
+
+<body>
+    <div class="content">
+        <h2 align="center">Updated Logs table</h2>
+        <hr width="80%">
+        <table align="center", border="2">
+            <thead>
+                <th>Access time</th>
+                <th>Route</th>
+            </thead>
+            {% for user in contents %}
+            <tbody>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+    
+</html>
