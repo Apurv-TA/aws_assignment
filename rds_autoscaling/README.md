@@ -152,10 +152,58 @@ Create an autoscaling group using the created launch template and the VPC. Also,
 
 Now we have to create a Lambda function which scales down the autoscaling group to zero on every Saturday and scales up to 2 on every Monday morning.
 
-The steps taken are:
+For this purpose we have created two lambda functions one to start the ASG and the other to stop it. The code used in both of them is the same and the difference being different Trigger events and Environement Variables
 
-1. Create a blank lambda function
-2. Configure two "EventBridge(CloudWatch Events)" triggers the configuration is shown below:
+Code is
+```import os
+import boto3
+
+client = boto3.client('autoscaling')
+
+def get_env_variable(var_name):
+    return os.environ[var_name]
+
+
+
+def lambda_handler(event, context):
+    auto_scaling_groups = get_env_variable('NAMES').split()
+
+    for group in auto_scaling_groups:
+        if servers_need_to_be_started(group):
+            action = "Starting"
+            min_size = int(get_env_variable('MIN_SIZE'))
+            max_size = int(get_env_variable('MAX_SIZE'))
+            desired_capacity = int(get_env_variable('DESIRED_CAPACITY'))
+        else:
+            action = "Stopping"
+            min_size = 0
+            max_size = 0
+            desired_capacity = 0
+
+        print(action + ": " + group)
+        response = client.update_auto_scaling_group(
+            AutoScalingGroupName=group,
+            MinSize=min_size,
+            MaxSize=max_size,
+            DesiredCapacity=desired_capacity,
+        )
+
+        print(response)
+
+def servers_need_to_be_started(group_name):
+    min_group_size = get_current_min_group_size(group_name)
+    if min_group_size == 0:
+        return True
+    else:
+        return False
+
+def get_current_min_group_size(group_name):
+    response = client.describe_auto_scaling_groups(
+        AutoScalingGroupNames=[ group_name ],
+    )
+    return response["AutoScalingGroups"][0]["MinSize"]
+```
+The two `EventBridge(CloudWatch Events)` that triggers the configuration is shown below:
 ```
 Create a new rule of "Schedule expression type"
 
@@ -168,13 +216,27 @@ apurv_autoscale_weekend
 Corn expression:  corn(00 00 ? * SAT-SUN *)
 ```
 
-3. Configure function with runtime Python 3.9
-4. Add the environement variables:
+
+The Emviroment variables are
+```
   `NAMES` - Space separated list of the Auto Scaling Groups you want to manage with this function
   `MIN_SIZE` - Minimum size of the Auto Scaling Group(s) when EC2 instances are started
   `MAX_SIZE` - Maximum size of the Auto Scaling Group(s) when EC2 instances are started
   `DESIRED_CAPACITY` - Desired capacity of the Auto Scaling Group(s) when EC2 instances are started
-5. Create a custom role with following policy:
+  
+  apurv_autoscale_weekday
+  DESIRED_CAPACITY	2
+  MAX_SIZE	3
+  MIN_SIZE	0
+  NAMES	Apurv-ASG
+
+  apurv_autoscale_weekend
+  DESIRED_CAPACITY	0
+  MAX_SIZE	0
+  MIN_SIZE	0
+  NAMES	Apurv-ASG
+```
+The custom role attached to both the lambda functions have this policy:
   ```
   {
     "Effect": "Allow",
@@ -182,8 +244,8 @@ Corn expression:  corn(00 00 ? * SAT-SUN *)
     "Resource": "*"
    }
   ```
-  and attach it to our lambda function
-6. Test the function by hitting the `Test` button. The first time an `Input test event` popup will appear. For `Sample event template` select `Scheduled event` and click `Save and test`.
+  
+The function can be tested by hitting the `Test` button. The first time an `Input test event` popup will appear. For `Sample event template` select `Scheduled event` and click `Save and test`.
 ### The output of lambda function is
 ![Screenshot (106)](https://user-images.githubusercontent.com/93191532/166096322-579b7825-9498-4059-8e34-5a5a5099bc29.png)
 
