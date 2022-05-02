@@ -5,6 +5,19 @@ Tags used in this assignment are:
 owner:    apurv.master@tigeranalytics.com
 project:  aws-training
 ```
+## Contents
+1. [Setting up the VPC](#setting-up-the-vpc)
+2. [Creating the EC2 instance](#creating-the-ec2-instance)
+3. [Setting up RDS](#setting-up-rds)
+4. [Setting up the CLI](#setting-up-cli)
+5. [Setup the Database](#set-up-the-database)
+6. [Setting up the flask application](#setting-up-the-flaks-application)
+7. [Provision an AWS Application load balancer which connects to the Autoscaling group](#provision-an-aws-application-load-balancer-which-connects-to-the-autoscaling-group)
+8. [Creating the lambda function](#creating-the-lambda-function)
+9. [Final output](#final-output)
+
+
+
 ## Setting up the VPC
 1. Configuration of the VPC and the subnets are:\
     ```
