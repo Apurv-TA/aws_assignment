@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance for a simple Flask app
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/aws_assignment/rds_autoscaling
+ExecStart=/home/ubuntu/aws_assignment/rds_autoscaling/venv/bin/gunicorn -b localhost:8000 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
